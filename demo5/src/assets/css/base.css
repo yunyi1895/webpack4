@@ -1,0 +1,9 @@
+body{
+  color: #f60;
+}
+.logo{
+  background-image: url('../image/logo.png');
+  height: 400px;
+  width: 400px;
+  background-repeat: no-repeat;
+}
