@@ -3,7 +3,7 @@
 ### demo3添加的配置有
 
 * **resolve** 
-项能设置模块如何被解析
+设置模块如何被解析
 resolve.alias  [_object_] 模块引入变得更简单
 resolve.extensions  [_array_] 自动扩展名
 resolve.modules [_array_] 告诉 webpack 解析模块时应该搜索的目录。多个项目可以使用一个 node_modules。
