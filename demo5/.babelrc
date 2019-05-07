@@ -1,14 +1,12 @@
 {
   "presets": [
-    ["env", { "modules": false }],
-    "stage-3"
+    [
+      "@babel/preset-env",
+      {
+        "useBuiltIns": "usage",
+        "corejs":3
+      }
+    ]
   ],
-  "plugins": ["transform-runtime"],
-  "comments": false,
-  "env": {
-    "test": {
-      "presets": ["env", "stage-3"],
-      "plugins": [ "istanbul" ]
-    }
-  }
+  "plugins": ["@babel/plugin-transform-runtime"]
 }

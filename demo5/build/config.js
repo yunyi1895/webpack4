@@ -14,13 +14,11 @@ module.exports={
         }
       },
     },
-
   },
   build:{
     mode:'production',
     assetsSubDirectory:'static',
-    publicPath:'./',
+    publicPath:'/',
     assetsRoot:'you-app'
   }
-
 }

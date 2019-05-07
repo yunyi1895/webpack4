@@ -2,7 +2,7 @@ var path = require('path');
 var help = require('./help.js');
 var config = require('./config.js');
 var htmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var mode = help.getMode();
 var rules = require('./webpack.rules.conf.js');
 module.exports={
@@ -28,6 +28,12 @@ module.exports={
       filename:'index.html',
       template:'./index.html',
       inject:true,
+      minify: {
+        // 压缩 HTML 文件
+        removeComments: true, // 移除 HTML 中的注释
+        collapseWhitespace: true, // 删除空白符与换行符
+        minifyCSS: true // 压缩内联 css
+      },
     }),
     new MiniCssExtractPlugin({
       filename: help.assetsPath('css/[name].css')
