@@ -42,7 +42,7 @@ npm i @babel/core babel-loader @babel/preset-env @babel/plugin-transform-runtime
 [@babel/preset-env](https://babeljs.io/docs/en/babel-preset-env)的配置选项中**useBuiltIns: usage**表示自动为使用的es6和es7的代码添加转换工具。**corejs:3**是因为新版本已经废弃了polyfill,[具体详解](https://babeljs.io/blog/2019/03/19/7.4.0#core-js-3-7646-https-githubcom-babel-babel-pull-7646)。
 
 
-* **css-loader style-loader less-loader less style-loader**
+* **css-loader style-loader less-loader less**
 解析css less
 * **autoprefixer postcss-loader**
 为css3添加自动补全
@@ -51,12 +51,12 @@ npm i @babel/core babel-loader @babel/preset-env @babel/plugin-transform-runtime
 * **url-loader file-loader**
 处理图片
 
-### demo4 配置更改
+### demo5 配置更改
 
 * **文件更改**
 新增webpack.rules.conf.js。用于定义解析规则
 
-* **新增assetsPath方法**
+* **新增help.assetsPath方法**
 设置开发和打包后的资源路径。
 
 

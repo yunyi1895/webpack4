@@ -5,6 +5,7 @@ module.exports = {
     publicPath: '/',
     devServer: {
       port: '8899',
+      open:true,
       proxy: {
         '/test/shortRent': {
           target: 'http:"//www.baidu.com',

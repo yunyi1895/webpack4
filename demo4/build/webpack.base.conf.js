@@ -9,8 +9,6 @@ module.exports={
     app:help.resolve('./app.js')
   },
   output:{
-    // path: help.resolve('dist'),
-    // filename:'js/[name].[hash].js',
   },
   resolve:{ // 解析
     alias:{

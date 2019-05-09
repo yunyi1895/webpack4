@@ -1,5 +1,3 @@
-var path = require('path');
-var webpack = require("webpack");
 var cleanWebpackPlugin = require('clean-webpack-plugin');
 var merge = require("webpack-merge");
 var help = require('./help.js');
