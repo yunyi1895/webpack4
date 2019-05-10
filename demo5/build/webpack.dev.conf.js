@@ -12,8 +12,8 @@ module.exports=merge(webpackConfigBase,{
     filename:'js/[name].js',
     publicPath:config.dev.publicPath
   },
-  devServer:{
-    port:config.dev.port,
-    proxy:config.dev.proxy
-  }
+  devServer:config.dev.devServer,
+  plugins:[
+   
+  ]
 })

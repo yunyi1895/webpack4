@@ -1,8 +1,8 @@
 var path = require('path');
+var webpack = require("webpack");
 var help = require('./help.js');
 var config = require('./config.js');
 var htmlWebpackPlugin = require('html-webpack-plugin');
-var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var mode = help.getMode();
 var rules = require('./webpack.rules.conf.js');
 module.exports={
@@ -24,6 +24,8 @@ module.exports={
     'Vue':'window.Vue'
   },
   plugins:[
+    new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new htmlWebpackPlugin({
       filename:'index.html',
       template:'./index.html',
@@ -34,9 +36,6 @@ module.exports={
         collapseWhitespace: true, // 删除空白符与换行符
         minifyCSS: true // 压缩内联 css
       },
-    }),
-    new MiniCssExtractPlugin({
-      filename: help.assetsPath('css/[name].css')
     })
   ],
 }

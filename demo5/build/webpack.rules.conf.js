@@ -1,14 +1,10 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
 var help = require('./help.js');
+var config = require('./config.js');
 const rules = [{
   test: /\.(le|c)ss$/,
   use: [
-    {
-      loader: MiniCssExtractPlugin.loader,
-      options: {
-        hmr: process.env.NODE_ENV === 'development',
-      },
-    },
+    process.env.NODE_ENV === 'development'?config.dev.styleLoader:config.build.styleLoader,
     { loader: "css-loader" },
     { loader: "less-loader" },
     {

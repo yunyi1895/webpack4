@@ -1,5 +1,6 @@
 var path = require('path');
 var webpack = require("webpack");
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
 var cleanWebpackPlugin = require('clean-webpack-plugin');
 var merge = require("webpack-merge");
 var help = require('./help.js');
@@ -14,6 +15,9 @@ module.exports=merge(webpackConfigBase,{
     path:help.resolve(config.build.assetsRoot),
   },
   plugins:[
-    new cleanWebpackPlugin()
+    new cleanWebpackPlugin(),
+    new MiniCssExtractPlugin({
+      filename: help.assetsPath('css/[name].css')
+    })
   ]
 })
