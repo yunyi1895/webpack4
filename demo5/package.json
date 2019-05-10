@@ -5,15 +5,9 @@
   "main": "index.js",
   "scripts": {
     "server": "http-server you-app -o -p 8081",
-    "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cross-env NODE_ENV=production webpack --config build/weboack.build.conf.js",
     "dev": "cross-env NODE_ENV=development webpack-dev-server --config build/webpack.dev.conf.js --open"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 version",
-    "not ie <= 8"
-  ],
   "keywords": [
     "demo"
   ],
@@ -21,10 +15,7 @@
   "license": "ISC",
   "devDependencies": {
     "@babel/core": "^7.4.4",
-    "@babel/plugin-transform-runtime": "^7.4.4",
-    "@babel/polyfill": "^7.4.4",
     "@babel/preset-env": "^7.4.4",
-    "@babel/runtime": "^7.4.4",
     "autoprefixer": "^9.5.1",
     "babel-loader": "^8.0.5",
     "clean-webpack-plugin": "^2.0.1",
@@ -39,6 +30,7 @@
     "mini-css-extract-plugin": "^0.6.0",
     "optimize-css-assets-webpack-plugin": "^5.0.1",
     "postcss-loader": "^3.0.0",
+    "regenerator-runtime": "^0.13.2",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",

@@ -10,7 +10,7 @@ var config = require('./config.js');
 module.exports=merge(webpackConfigBase,{
   mode: config.build.mode,
   output:{
-    filename:help.assetsPath('js/[name].[hash].js'),
+    filename:help.assetsPath('js/[name].js'),
     publicPath:config.build.publicPath,
     path:help.resolve(config.build.assetsRoot),
   },

@@ -24,8 +24,6 @@ module.exports={
     'Vue':'window.Vue'
   },
   plugins:[
-    new webpack.NamedModulesPlugin(),
-    new webpack.HotModuleReplacementPlugin(),
     new htmlWebpackPlugin({
       filename:'index.html',
       template:'./index.html',
