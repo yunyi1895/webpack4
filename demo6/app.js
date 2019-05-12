@@ -1,8 +1,8 @@
 // import "core-js/stable";
-// import "regenerator-runtime/runtime";
+import "regenerator-runtime/runtime";
 import '@/view/dom.js';
 import Vue from 'Vue';
-import './src/assets/css/base.css';
+import './src/assets/css/base.less';
 const s = new Set([1, 2, 3, 4, 5, 3, 2, 16, 7, 83, 21, 2, 1]);
 
 var w = Object.assign({}, { w: 1, e: 4 })

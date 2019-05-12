@@ -2,34 +2,32 @@
 var help = require('./help.js');
 var config = require('./config.js');
 const rules = [{
-    test: /\.less$/,
-    use: [{
-        loader: "style-loader" // creates style nodes from JS strings
-    }, {
-        loader: "css-loader", // translates CSS into CommonJS
-        options:{
-            importLoaders: 0 // 0 => 无 loader(默认); 1 => postcss-loader; 2 => postcss-loader, less-loader
-        }
-    },
-    {
-        loader: "postcss-loader",
-        options: {
-            plugins: [
-                require("autoprefixer")({
-                    browsers: [
-                        'last 10 Chrome versions',
-                        'last 5 Firefox versions',
-                        'Safari >= 6',
-                        'ie> 8'
-                    ]
-                })
-            ]
-        }
-    },
-    {
-        loader: "less-loader" // compiles Less to CSS
-    },
-    ]
+    test: /\.(le|c)ss$/,
+    use: [
+        process.env.NODE_ENV === 'development' ? config.dev.styleLoader : config.build.styleLoader,
+        {
+            loader: "css-loader",
+            options: {
+                importLoaders: 2 // 0 => 无 loader(默认); 1 => postcss-loader; 2 => postcss-loader, less-loader
+            }
+        },
+        { loader: "less-loader" },
+        {
+            loader: "postcss-loader",
+            options: {
+                plugins: [
+                    require("autoprefixer")({
+                        browsers: [
+                            'last 10 Chrome versions',
+                            'last 5 Firefox versions',
+                            'Safari >= 6',
+                            'ie> 8'
+                        ]
+                    })
+                ]
+            }
+        },
+    ],
 }, {
     test: /\.(png|jpg|gif)$/,
     use: [{
