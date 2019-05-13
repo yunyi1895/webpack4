@@ -11,7 +11,6 @@ var config = require('./config.js');
 module.exports=merge(webpackConfigBase,{
   mode: config.build.mode,
   optimization:{
-    minimizer:[new OptimizeCSSAssetsPlugin({})]
   },
   output:{
     filename:help.assetsPath('js/[name].js'),
@@ -22,6 +21,7 @@ module.exports=merge(webpackConfigBase,{
     new cleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: help.assetsPath('css/[name].css')
-    })
+    }),
+    new OptimizeCSSAssetsPlugin({})
   ]
 })
