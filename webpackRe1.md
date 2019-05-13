@@ -55,7 +55,7 @@ touch webpack.config.js
 代码内容详见[demo1](https://github.com/yunyi1895/webpack4/tree/master/demo1)
 配置 webpack.config.js
 
-![](https://user-gold-cdn.xitu.io/2019/5/8/16a964d6d1a03a8f?w=684&h=274&f=png&s=145148)
+![](https://user-gold-cdn.xitu.io/2019/5/13/16aaf6f77cdebb6e?w=1310&h=702&f=png&s=729736)
 打包方式有两种
 * 通过npx命令
 ```
@@ -519,6 +519,7 @@ npm run build
 **babel-loader**还有很多配置很多坑，遇到就查文档或者google吧。
 
 # 六、样式loader与样式HMR
+代码内容详见[demo6](https://github.com/yunyi1895/webpack4/tree/master/demo6)
 ## 样式loader
 
 [样式loader](https://www.webpackjs.com/loaders/#%E6%A0%B7%E5%BC%8F),这些都是官方提供的样式loader。
@@ -620,10 +621,67 @@ npm run build
 > 打包后并没有css文件。
 把代码放入服务器或者使用[http-server](https://github.com/indexzero/http-server#readme)起一个本地的服务器。<br>
 
-这时我们需要引入[mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin/#root)进行css代码的抽离，以及打包插件[optimize-css-assets-webpack-plugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin)在打包的时候进行压缩。
+这时我们需要引入[mini-css-extract-plugin](https://webpack.js.org/plugins/mini-css-extract-plugin/#root)进行css代码的抽离，以及打包插件[optimize-css-assets-webpack-plugin](https://github.com/NMFR/optimize-css-assets-webpack-plugin)在打包的时候进行css代码压缩。
 ```
 npm i mini-css-extract-plugin optimize-css-assets-webpack-plugin -D
 ```
+按照官方的语法进行配置
+
+![](https://user-gold-cdn.xitu.io/2019/5/13/16aaebcea6faab4f?w=1468&h=1014&f=png&s=460662)
+```
+npm run build
+```
+css的代码已经被抽离了并且压缩了。
+
+![](https://user-gold-cdn.xitu.io/2019/5/13/16aaebe252fa577d?w=1174&h=232&f=png&s=147322)
+## 样式HMR
+查看官网有关于[HMR](https://www.webpackjs.com/concepts/hot-module-replacement/)解释。<br>
+> 模块热替换(HMR - Hot Module Replacement)功能会在应用程序运行过程中替换、添加或删除模块，而无需重新加载整个页面。
+
+按照官方的[实例](https://www.webpackjs.com/guides/hot-module-replacement/#hmr-%E4%BF%AE%E6%94%B9%E6%A0%B7%E5%BC%8F%E8%A1%A8)。
+首先更改devServer的配置，设置[hot](https://www.webpackjs.com/configuration/dev-server/#devserver-hot)属性为true。
+
+![](https://user-gold-cdn.xitu.io/2019/5/13/16aaec7a787b362c?w=932&h=508&f=png&s=192142)
+
+因为设置模块热加载是开发环境需要的。所以更改webpack.dev.conf.js的配置。
+```
+  plugins:[
+    new webpack.HotModuleReplacementPlugin()
+  ]
+```
+由于**mini-css-extract-plugin**不支持HMR,所以在开发环境继续使用**style-loader**。
+现在css的HMR已经配置好了。
+
+# 文件解析。
+代码内容详见[demo7](https://github.com/yunyi1895/webpack4/tree/master/demo7)<br>
+文件解析需要用到的[loaders](https://www.webpackjs.com/loaders/#%E6%96%87%E4%BB%B6)。
+
+![](https://user-gold-cdn.xitu.io/2019/5/13/16aaefef19a5f75e?w=1150&h=418&f=png&s=211476)
+使用[url-loader](https://www.webpackjs.com/loaders/url-loader/)作为文件解析的loader。[file-loader](https://www.webpackjs.com/loaders/file-loader/)是一种'搬运工'的loader，将代码中需要的文件'搬运'到合适的地方，**url-loader**在搬运的基础上可以在代码上添加数据的作用，如添加base64的图片。
+```
+{
+	test: /\.(png|jpg|gif)$/,
+	use: [{
+		// 需要下载file-loader和url-loader
+		loader: "url-loader",
+		options: {
+			limit: 5 * 1024, //小于5kb将会已base64位图片打包处理 
+			// 图片文件输出的文件夹
+			outputPath: help.assetsPath("images"),
+			name: '[name].[ext]'
+		}
+	}]
+},
+{
+	test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
+	loader: 'url-loader',
+	options: {
+		limit: 10000,
+		outputPath: help.assetsPath("fonts")
+	}
+},
+```
+
 
 
 

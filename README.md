@@ -1,26 +1,32 @@
-## 用webpack4渐进式搭建可用性多页面模板
+## 渐进式配置webpack4单页面和多页面
 
-* 多页面入口
-* 合理拆分包
-* loader配置
+[掘金文章地址](https://juejin.im/post/5cd27616e51d453a69177ea9)
+
+使用包的版本
+```
+webpack ->4.3.0
+babel-loader ->8.0.5
+npm ->6.4.1
+webpack-cli ->3.3.1
+```
 
 ### **demo1**
 基础配置
 
 ### **demo2**
-配置html和mode
+配置开发和生产环境
 
 ### **demo3**
-配置resolve和externals
+模板解析与外部扩展
 
 ### **demo4**
-打包模式拆分 拆分为build何dev模式
+生产与开发环境分开打包
 
 ### **demo5**
-各种loader解析
+解析转译JS
 
 ### **demo6**
-多页面入口配置
+样式loader与样式HMR
 
 ### **demo7**
-optimization.splitChunks进行分包
+文件解析
