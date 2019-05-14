@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import About from './src/view/about';
+import Inbox from './src/view/inbox';
 import asyncComponent from './src/assets/js/AsyncComponent'
-// const Inbox = resolve => require(['./src/view/inbox'], resolve)
-const Inbox = asyncComponent(() => import('./src/view/inbox'));
+// const Inbox = asyncComponent(() => import( './src/view/inbox'));
+// const About = asyncComponent(() => import( './src/view/about'));
 import { BrowserRouter as Router, Switch, Redirect, Route, Link, HashRouter ,RouteChildren} from 'react-router-dom'
 class App extends React.Component {
   render() {
@@ -18,8 +19,6 @@ class App extends React.Component {
     );
   }
 }
-
-
 
 class Home extends React.Component {
   render() {

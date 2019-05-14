@@ -14,6 +14,8 @@ module.exports=merge(webpackConfigBase,{
   },
   devServer:config.dev.devServer,
   plugins:[
-    new webpack.HotModuleReplacementPlugin()
+    
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
   ]
 })

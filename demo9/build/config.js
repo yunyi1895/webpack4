@@ -12,6 +12,9 @@ module.exports = {
       port: '8899',
       open: true,
       hot:true,
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
       proxy: {
         '/test/shortRent': {
           target: 'http:"//www.baidu.com',

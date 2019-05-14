@@ -13,7 +13,7 @@ module.exports = merge(webpackConfigBase, {
   mode: config.build.mode,
   optimization: {
     splitChunks: {
-      chunks: 'all',
+      chunks: 'async',
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
@@ -22,7 +22,6 @@ module.exports = merge(webpackConfigBase, {
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
-
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10
