@@ -1,20 +1,24 @@
-import "regenerator-runtime/runtime";
 import React from 'react';
 import ReactDOM from 'react-dom';
 import About from './src/view/about';
-import Inbox from './src/view/inbox';
-import asyncComponent from './src/assets/js/AsyncComponent'
-// const Inbox = asyncComponent(() => import( './src/view/inbox'));
+//import Inbox from './src/view/inbox';
+import asyncComponent from './src/assets/js/AsyncComponent';
+
+
+ const Inbox = asyncComponent(() => import('./src/view/inbox'));
 // const About = asyncComponent(() => import( './src/view/about'));
 import { BrowserRouter as Router, Switch, Redirect, Route, Link, HashRouter ,RouteChildren} from 'react-router-dom'
 class App extends React.Component {
+  componentDidMount(){
+    
+  }
   render() {
     return (
       <div className="shopping-list">
       {this.props.children}
         <ul>
-          <li><Link to="/about">About</Link></li>
-          <li><Link to="/inbox">Inbox</Link></li>
+          <li><Link to="/about">About1</Link></li>
+          <li><Link to="/inbox">Inbox1</Link></li>
         </ul>
       </div>
     );

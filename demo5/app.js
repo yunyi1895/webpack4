@@ -1,13 +1,13 @@
-// import "core-js/stable";
-// import "regenerator-runtime/runtime";
+//import "core-js/stable";
+import "regenerator-runtime/runtime";
 import '@/view/dom.js';
 import Vue from 'Vue';
 import './src/assets/css/base.css';
 const s = new Set([1, 2, 3, 4, 5, 3, 2, 16, 7, 83, 21, 2, 1]);
 
 var w = Object.assign({}, { w: 1, e: 4 })
-console.log(w);
-console.log([...s]);
+alert(JSON.stringify(w));
+alert([...s]);
 function pro(v) {
   return new Promise((resolve) => {
     if (v) {
@@ -18,14 +18,14 @@ function pro(v) {
   })
 }
 pro(true).then(res=>{
-  console.log(res)
+  alert(res)
 })
-// async function awaitTest(){
-//   let res = await pro(true);
-//   console.log(res)
-//   return res;
-// }
-// awaitTest();
+async function awaitTest(){
+  let res = await pro(true);
+  alert(res)
+  return res;
+}
+awaitTest();
 
 new Vue({
   el: '#app'
