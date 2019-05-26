@@ -11,14 +11,13 @@ var config = require('./config.js');
 
 module.exports = merge(webpackConfigBase, {
   mode: config.build.mode,
- 
   output: {
     filename: help.assetsPath('js/[name].[chunkhash].js'),
     publicPath: config.build.publicPath,
     path: help.resolve(config.build.assetsRoot),
   },
   plugins: [
-   // new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
     new cleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: help.assetsPath('css/[name].css')

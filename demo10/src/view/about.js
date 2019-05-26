@@ -1,9 +1,12 @@
 import React from 'react';
-//import(/* webpackChunkName: "xlsx", webpackPrefetch: true */ 'xlsx');
+//import _ from 'lodash';
+import { concat } from 'lodash-es';
 class About extends React.Component {
+
     render() {
+      const s = concat([1],[2,3,1,2,3,4,6,78,41]);
       return (
-        <h3>About1222</h3>
+        <h3>{s}</h3>
       )
     }
   }

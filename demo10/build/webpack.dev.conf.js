@@ -8,7 +8,6 @@ var config = require('./config.js');
 module.exports=merge(webpackConfigBase,{
   mode: config.dev.mode,
   devtool:'eval-source-map',
- 
   output:{
     filename:'js/[name].js',
     publicPath:config.dev.publicPath

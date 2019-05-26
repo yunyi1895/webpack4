@@ -13,18 +13,6 @@ module.exports={
   },
   output:{
   },
-  resolve:{ // 解析
-    alias:{
-      '@': help.resolve('./src')
-    },
-    extensions:['.js','.vue','.json','.css','.less']
-  },
-  module:{
-    rules:rules
-  },
-  externals:{ //外部扩展
-    'Vue':'window.Vue'
-  },
   optimization: {
     runtimeChunk:true,
     splitChunks: {
@@ -37,17 +25,16 @@ module.exports={
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
+        reactVendors: {
+          chunks: 'all',
+          test: /(react|react-dom|react-dom-router)/,
+          priority: 100,
+          name: 'react',
+        },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
-          priority: -10,
-          name:'vendors'
+          priority: -10
         },
-        // echartsVenodr: { // 异步加载echarts包
-        //   test: /(echarts)/,
-        //   priority: 100, // 高于async-commons优先级
-        //   name: 'echarts~venodr',
-        //   chunks: 'async'
-        // },
         default: {
           minChunks: 2,
           priority: -20,
@@ -55,6 +42,18 @@ module.exports={
         }
       }
     }
+  },
+  resolve:{ // 解析
+    alias:{
+      '@': help.resolve('./src')
+    },
+    extensions:['.js','.vue','.json','.css','.less']
+  },
+  module:{
+    rules:rules
+  },
+  externals:{ //外部扩展
+    'Vue':'window.Vue'
   },
   plugins:[
     
