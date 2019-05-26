@@ -1,7 +1,8 @@
 import React from 'react';
 class Inbox extends React.Component {
    async componentDidMount() {
-    const {default:echarts}= await import('echarts');
+    // const {default:echarts}= await import('echarts');
+    const {default:echarts} = await import(/* webpackChunkName: "echarts~async"*/ 'echarts');
     var myChart = echarts.init(document.getElementById('main'));
     var option = {
       tooltip: {
