@@ -1,86 +1,19 @@
-# 模块化拆包2
-参考代码 [demo9](https://github.com/yunyi1895/webpack4/tree/master/demo9)<br>
-这一节只使用splitChunks的默认配置来实现异步加载，理解异步加载的好处。<br>。
-使用react作为开发框架。
-## 同步引入的拆包
-```
-redux -> 16.8.6
-react-dom -> 16.8.6
-react-router-dom -> 5.0.0
-```
-安装 react 
-```
-npm i react react-router-dom react-dom -S
-```
-解析 jsx代码还需要[@babel/preset-react](https://babeljs.io/docs/en/babel-preset-react#docsNav)
-```
-npm i @babel/preset-react -D
-```
-详细代码请看[demo9](https://github.com/yunyi1895/webpack4/tree/master/demo9)。<br>
-两个路由分别对应不同的组件。
-```
-    import About from './src/view/about';
-    import Inbox from './src/view/inbox';
-    // ....
-    
-   <App>
-        <Route path="/about" component={About} />
-        <Route path="/inbox" component={Inbox} />
-    </App>
-```
+# JS Tree Shaking 
+参考代码 [demo10](https://github.com/yunyi1895/webpack4/tree/master/demo10)<br>
 
-inbox.js引入了echarts并且使用了。
-```
-import React from 'react';
-import echarts from 'echarts';
-class Inbox extends React.Component {
-  componentDidMount() {
-    var myChart = echarts.init(document.getElementById('main'));
-    var option = {
-      tooltip: {
-        show: true
-      },
-      legend: {
-        data: ['销量']
-      },
-      xAxis: [
-        {
-          type: 'category',
-          data: ["衬衫", "羊毛衫2", "雪纺衫222", "裤子111", "高跟鞋", "袜子"]
-        }
-      ],
-      yAxis: [
-        {
-          type: 'value'
-        }
-      ],
-      series: [
-        {
-          "name": "销量",
-          "type": "bar",
-          "data": [5, 20, 40, 10, 10, 20]
-        }
-      ]
-    };
+[Tree Shaking](https://webpack.js.org/guides/tree-shaking/#root)
 
-    // 为echarts对象加载数据 
-    myChart.setOption(option);
-  }
-  render() {
-    return (
-      <div>
-        <h2>Inbox</h2>
-        <div style={{ height: '400px' }} id="main"></div>
-      </div>
-    )
-  }
-}
-export default Inbox;
+![](https://user-gold-cdn.xitu.io/2019/5/26/16af2c8cd610ab6b?w=1506&h=370&f=png&s=301709)
+> 树抖动是JavaScript上下文中常用于消除死代码的术语。
+它依赖于ES2015模块语法的静态结构，即导入和导出。
+名称和概念已由ES2015模块捆绑器汇总推广。
+
+摇树的意思。在webpack4.0里面会自动的把不需要的js在打包的时候剔除。当然需要开发进行配合：**按需加载**<br>
+我们拿[lodash](https://github.com/lodash/lodash)为例。
+为了清楚我们摇掉了多少代码，先将react的包拆出来单独打包。
 ```
-splitChunks 使用默认配置
-```
-    splitChunks: {
-      chunks: 'async',
+splitChunks: {
+      chunks: 'all',
       minSize: 30000,
       maxSize: 0,
       minChunks: 1,
@@ -89,6 +22,12 @@ splitChunks 使用默认配置
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
+        reactVendors: {
+          chunks: 'all',
+          test: /(react|react-dom|react-dom-router)/,
+          priority: 100,
+          name: 'react',
+        },
         vendors: {
           test: /[\\/]node_modules[\\/]/,
           priority: -10
@@ -101,91 +40,52 @@ splitChunks 使用默认配置
       }
     }
 ```
-
-运行打包命令
+在about.js里面使用lodash
 ```
-npm run build
-```
-
-![](https://user-gold-cdn.xitu.io/2019/5/14/16ab52fa56bef735?w=1888&h=494&f=png&s=570869)
-
-![](https://user-gold-cdn.xitu.io/2019/5/14/16ab5300e9177792?w=2850&h=1360&f=png&s=1386227)
-
-> 打包的时候已经提示了，打包的代码太大影响性能。可以使用import()或require来限制包的大小。确保延迟加载应用程序的某些部分。
-```
-WARNING in webpack performance recommendations: 
-You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
-For more info visit https://webpack.js.org/guides/code-splitting/
-```
->我们在首页的时候，并没有/inbox路由，但是/inbox路由里面的代码都打包在了app.js这一个js里面。首屏渲染变的很慢。按照官方提示需要做组件的动态引入，只有路由切换到/inbox的时候才加载对应组件的代码。
-
-### 异步引入拆包
-新建AsyncComponent.js。
-```
-import React, { Component } from "react";
-
-export default function asyncComponent(importComponent) {
-  class AsyncComponent extends Component {
-    constructor(props) {
-      super(props);
-
-      this.state = {
-        component: null
-      };
-    }
-
-    async componentDidMount() {
-      const { default: component } = await importComponent();
-    // 组件引入完成后渲染组件
-      this.setState({
-        component: component
-      });
-    }
+import React from 'react';
+import _ from 'lodash';
+class About extends React.Component {
 
     render() {
-      const C = this.state.component;
-
-      return C ? <C {...this.props} /> : null;
+      const s = _.concat([1],[2,3,1,2,3,4,6,78,41]);
+      return (
+        <h3>{s}</h3>
+      )
     }
   }
-
-  return AsyncComponent;
-}
-```
-更换引入模式
-```
-//import Inbox from './src/view/inbox';
-const Inbox = asyncComponent(() => import('./src/view/inbox'));
+  export default About;
 ```
 运行打包命令
 ```
 npm run build
 ```
-![](https://user-gold-cdn.xitu.io/2019/5/14/16ab5728ca1fcfe8?w=2868&h=1274&f=png&s=1788166)
-echarts被引入到1.js里面了。
-```
-npm run server
-```
-首页并没有加载1.js
-![](https://user-gold-cdn.xitu.io/2019/5/14/16ab5745ff48f0f8?w=710&h=642&f=png&s=112573)
-路由跳转后会引入。
 
-![](https://user-gold-cdn.xitu.io/2019/5/14/16ab574e5c99d711?w=796&h=964&f=png&s=172346)
+![](https://user-gold-cdn.xitu.io/2019/5/26/16af2c63544fb76b?w=1376&h=322&f=png&s=474070)
+合并引入的vendors有95kb。我们只使用了lodash的concat方法，其他的方法没使用。
+我们使用lodash的模块化包[lodash-es](https://www.npmjs.com/package/lodash-es)。
+```
+npm i lodash-es -S
+```
+改变about.js的代码
+```
+import React from 'react';
+//import _ from 'lodash';
+import { concat } from 'lodash-es';
+class About extends React.Component {
 
-react的动态引入组件就OK了。
-按照官方文档，还可以自定义chunk名称
+    render() {
+      const s = concat([1],[2,3,1,2,3,4,6,78,41]);
+      return (
+        <h3>{s}</h3>
+      )
+    }
+  }
+  export default About;
+```
+运行打包命令
+```
+npm run build
+```
 
-```
-const Inbox = asyncComponent(() => import(/* webpackChunkName: "echarts" */ './src/view/inbox'));
-```
-其实还可以异步引入依赖包
-```
-async componentDidMount() {
-    const {default:echarts}= await import('echarts');
-    var myChart = echarts.init(document.getElementById('main'));
-}
-```
-## 总结
-* 一般情况下推荐**splitChunks.chunks: 'all'**，其他参数可以不变。'all'的意思是同步引入和异步引入都可以进行拆包。
-* 尽量小的引入所需要的插件，比如echarts官方提供了[按需加载](https://echarts.baidu.com/tutorial.html#%E5%9C%A8%20webpack%20%E4%B8%AD%E4%BD%BF%E7%94%A8%20ECharts)的方法。
-* 在首页没有用的某个插件的时候，尽量使用异步加载的方式进行引入。
+![](https://user-gold-cdn.xitu.io/2019/5/26/16af2ce4c66e76c9?w=1394&h=216&f=png&s=383781)
+现在只有28kb。缩小的部分就是loader的按需加载的部分。
