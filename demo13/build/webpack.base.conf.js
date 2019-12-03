@@ -23,6 +23,18 @@ module.exports={
       automaticNameDelimiter: '~',
       name: true,
       cacheGroups: {
+        reactVendors: {
+          chunks: 'all',
+          test: /(react|react-dom|react-dom-router)/,
+          priority: 100,
+          name: 'react',
+        },
+        commonVendors: {
+          chunks: 'all',
+          test: /(dropzone|xlsx)/,
+          priority: 90,
+          name: 'commonMode',
+        },
         vendors: {
           name:'vendors',
           chunks: 'all',
@@ -55,7 +67,7 @@ module.exports={
       filename:'index.html',
       template:'./index.html',
       inject:true,
-      chunks: ['vendors','app'],
+      chunks: ['vendors','app','react'],
       minify: {
         // 压缩 HTML 文件
         removeComments: isPord, // 移除 HTML 中的注释
@@ -75,7 +87,7 @@ function concatHtmlWebpackPlugin() {
       filename: '.' + html.substring(html.lastIndexOf('/')),
       template: html, //html模板路径
       inject: true, //允许插件修改哪些内容，包括head与body
-      chunks: ['vendors',i],//i代表入口文件的key
+      chunks: ['vendors',i,'commonMode'],//i代表入口文件的key
       minify: {
         // 压缩 HTML 文件
         removeComments: isPord, // 移除 HTML 中的注释

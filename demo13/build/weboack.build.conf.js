@@ -21,7 +21,7 @@ module.exports = merge(webpackConfigBase, {
     path: help.resolve(config.build.assetsRoot),
   },
   plugins: [
-    // new BundleAnalyzerPlugin(),
+    new BundleAnalyzerPlugin(),
     new cleanWebpackPlugin(),
     new MiniCssExtractPlugin({
       filename: help.assetsPath('css/[name].css')
